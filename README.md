@@ -10,11 +10,13 @@ Feedback appreciated
 
 ## Browser compatibility
 
-Chrome : 33
-Firefox : 18
-Internet Explorer : 10
-Opera : 12.10
-Safari : 6.1
+Name    | Version
+------  | -------
+Chrome  | 33
+Firefox | 18
+IE      | 10
+Opera   | 12.10
+Safari  | 6.1
 
 ## Contact
 
