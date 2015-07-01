@@ -2,7 +2,7 @@
 
 Leaflet plugin for animating a marker.
 
-Inspired by [Leaflet.AnimatedMarker](http://openplans.github.com/Leaflet.AnimatedMarker/)
+Inspired by [Leaflet.AnimatedMarker](https://github.com/openplans/Leaflet.AnimatedMarker)
 
 ## Check out the [demo](http://lyon.glicer.com).
 
