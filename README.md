@@ -1,4 +1,4 @@
-# js-leaflet-animated
+# Leaflet Animated
 
 [Leaflet](http://leafletjs.com/) plugin for animating a marker.
 
