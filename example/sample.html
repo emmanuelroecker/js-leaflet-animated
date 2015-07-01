@@ -68,7 +68,7 @@
     ]);
 
     //create vaporeto marker, speed : 64 meters/seconds
-    var vaporeto = L.animatedMarker(pathVaporeto.getLatLngs(), { icon: iconVaporeto, speed: 64 });
+    var vaporeto = L.GlAnimatedMarker(pathVaporeto.getLatLngs(), { icon: iconVaporeto, speed: 64 });
 
     //called when mouse clicked
     vaporeto.on("click", function () {

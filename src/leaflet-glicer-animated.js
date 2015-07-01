@@ -16,7 +16,7 @@
  *
  */
 
-L.AnimatedMarker = L.Marker.extend({
+L.GlAnimatedMarkerPlugin = L.Marker.extend({
     options: {
         speed: 200,          // meters / seconds
         autoStart: true,     // animate on add
@@ -164,6 +164,6 @@ L.AnimatedMarker = L.Marker.extend({
     }
 });
 
-L.animatedMarker = function (latlngs, options) {
-    return new L.AnimatedMarker(latlngs, options);
+L.GlAnimatedMarker = function (latlngs, options) {
+    return new L.GlAnimatedMarkerPlugin(latlngs, options);
 };

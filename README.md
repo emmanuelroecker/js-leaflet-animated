@@ -12,17 +12,17 @@ Feedback appreciated
 
 Move a marker along a polyline at a specific rate (meter per second).
 
-When mouse over marker pause, and restart when mouse out.
+When mouse over the marker stops, and restarts when mouse out.
 
-At the end of path, marker restart in reverse path.
+At the end of path, the marker restarts in reverse path.
 
-if page becomes invisible, animation stop.
+If page becomes invisible, the marker stops.
 
 ## Sample code
 
 Complete sample : [here](example/sample.html)
 
-Only javascript using plugin :
+Only javascript parts using the plugin :
 
 ```javascript
 //create vaporeto icon
@@ -50,15 +50,15 @@ var pathVaporeto = L.polyline([
 ]);
 
 //create vaporeto marker, speed : 64 meters/seconds
-var vaporeto = L.animatedMarker(pathVaporeto.getLatLngs(), { icon: iconVaporeto, speed: 64 });
+var vaporeto = L.GlAnimatedMarker(pathVaporeto.getLatLngs(), { icon: iconVaporeto, speed: 64 });
 
-//called when marker clicked
+//called when the marker is clicked
 vaporeto.on("click", function () {
     console.log("vaporeto clicked");
 });
 
 //add marker to leaflet map
-mymap.addLayer(vaporeto);
+leafletmap.addLayer(vaporeto);
 ```
 
 ## Browser compatibility
