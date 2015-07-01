@@ -52,7 +52,7 @@ var pathVaporeto = L.polyline([
 //create vaporeto marker, speed : 64 meters/seconds
 var vaporeto = L.animatedMarker(pathVaporeto.getLatLngs(), { icon: iconVaporeto, speed: 64 });
 
-//called when mouse clicked
+//called when marker clicked
 vaporeto.on("click", function () {
     console.log("vaporeto clicked");
 });
