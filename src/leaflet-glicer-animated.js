@@ -1,7 +1,25 @@
+
+/**
+ * Leaflet plugin animated marker
+ *
+ * Javascript
+ *
+ * @category  GLICER
+ * @author    Emmanuel ROECKER
+ * @author    Rym BOUCHAGOUR
+ * @copyright 2015 GLICER
+ * @license   MIT
+ * @link      http://dev.glicer.com/
+ *
+ * Created : 01/07/15
+ * File : leaflet-glicer-animated.js
+ *
+ */
+
 L.AnimatedMarker = L.Marker.extend({
     options: {
         speed: 200,          // meters / seconds
-        autoStart: true,     // animate on add?
+        autoStart: true,     // animate on add
         loop: true,          // autorestart reverse animation at end
         waitingLoop: 2000,   // waiting before restart reverse animation
         waitingStart: 1000,  // waiting before first start
@@ -16,33 +34,21 @@ L.AnimatedMarker = L.Marker.extend({
         this.speed = options.speed / 1000; //translate to meters / milliseconds
 
         var self = this;
-        document.addEventListener("visibilitychange", function() {
+        document.addEventListener("visibilitychange", function() { //stop css animation when page invisible
             if (document.hidden) {
-                console.log("hidden stop");
-                self.stop();
+                self.pause();
             } else {
                 self.start();
-                console.log("hidden start");
             }
         }, false);
         L.Marker.prototype.initialize.call(this, latlngs[0], options);
-    },
-
-    handleVisibilityChange: function () {
-        if (document.hidden) {
-            console.log("hidden stop");
-            this.stop();
-        } else {
-            this.start();
-            console.log("hidden start");
-        }
     },
 
     onAdd: function (map) {
         this._map = map;
         this.initevents();
         L.Marker.prototype.onAdd.call(this, map);
-        if (this.options.autoStart) { //use ready event
+        if (this.options.autoStart) {
             var self = this;
             setTimeout(function () {
                 self.restart(false);
@@ -54,7 +60,7 @@ L.AnimatedMarker = L.Marker.extend({
         var self = this;
 
         this._map.on('zoomstart', function () {
-            self.stop();
+            self.pause();
         });
 
         this._map.on('zoomend', function () {
@@ -62,7 +68,7 @@ L.AnimatedMarker = L.Marker.extend({
         });
 
         this.on("mouseover", function (e) {
-            self.stop();
+            self.pause();
         });
 
         this.on("mouseout", function (e) {
@@ -82,7 +88,7 @@ L.AnimatedMarker = L.Marker.extend({
         this.start();
     },
 
-    stop: function () {
+    pause: function () {
         if (this._end)
             return;
 
@@ -134,15 +140,12 @@ L.AnimatedMarker = L.Marker.extend({
 
         this.startTransition(timems);
 
-        // Move to the next vertex
         this.setLatLng(this._latlngs[this._i]);
         if (this._i < (this._latlngslen - 1)) {
-            // Queue up the animation to the next vertex
             this._tid = setTimeout(function () {
                 self.start();
             }, timems);
         } else {
-            // Queue up the end
             if (this.options.loop) {
                 this._tid = setTimeout(function () {
                     self._end = true;
