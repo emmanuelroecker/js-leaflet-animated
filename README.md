@@ -20,7 +20,9 @@ if page becomes invisible, animation stop.
 
 ## Sample code
 
-Complete code : [here](example/sample.html)
+Complete sample : [here](example/sample.html)
+
+Only javascript using plugin :
 
 ```javascript
 //create vaporeto icon
