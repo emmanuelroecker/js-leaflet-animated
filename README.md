@@ -10,11 +10,13 @@ Feedback appreciated
 
 ## Description
 
-Move a marker along a polyline at a specific rate (meter per second)
+Move a marker along a polyline at a specific rate (meter per second).
 
-When mouse over marker pause, and restart when mouse out
+When mouse over marker pause, and restart when mouse out.
 
-At the end of path, marker restart in reverse path
+At the end of path, marker restart in reverse path.
+
+if page becomes invisible, animation stop.
 
 ## Sample code
 
