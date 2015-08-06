@@ -1,4 +1,3 @@
-
 /**
  * Leaflet plugin animated marker
  *
@@ -31,10 +30,13 @@ L.GlAnimatedMarkerPlugin = L.Marker.extend({
     initialize: function (latlngs, options) {
         this._originalLatlngs = latlngs;
         this._end = true;
+        this._tid = null;
+        this._started = false;
         this.speed = options.speed / 1000; //translate to meters / milliseconds
 
         var self = this;
-        document.addEventListener("visibilitychange", function() { //stop css animation when page invisible
+
+        document.addEventListener("visibilitychange", function () { //stop css animation when page invisible
             if (document.hidden) {
                 self.pause();
             } else {
@@ -56,6 +58,7 @@ L.GlAnimatedMarkerPlugin = L.Marker.extend({
         }
     },
 
+
     initevents: function () {
         var self = this;
 
@@ -67,6 +70,7 @@ L.GlAnimatedMarkerPlugin = L.Marker.extend({
             self.start();
         });
 
+
         this.on("mouseover", function (e) {
             self.pause();
         });
@@ -74,6 +78,7 @@ L.GlAnimatedMarkerPlugin = L.Marker.extend({
         this.on("mouseout", function (e) {
             self.start();
         });
+
     },
 
     restart: function (reverse) {
@@ -84,6 +89,7 @@ L.GlAnimatedMarkerPlugin = L.Marker.extend({
         this._latlngs = this._originalLatlngs.slice();
         this._latlngslen = this._originalLatlngs.length;
         this._end = false;
+        this._started = false;
         this._i = 1;
         this.start();
     },
@@ -92,10 +98,12 @@ L.GlAnimatedMarkerPlugin = L.Marker.extend({
         if (this._end)
             return;
 
-        if (this._tid) {
-            clearTimeout(this._tid);
-            delete this._tid;
-        }
+        if (!this._started)
+            return;
+        this._started = false;
+
+        clearTimeout(this._tid);
+        delete this._tid;
 
         var position = this._icon.getBoundingClientRect();
         var container = this._map._container.getBoundingClientRect();
@@ -135,14 +143,19 @@ L.GlAnimatedMarkerPlugin = L.Marker.extend({
         if (this._end)
             return;
 
+        if (this._started)
+            return;
+        this._started = true;
+
         var self = this;
         var timems = this._latlngs[this._i - 1].distanceTo(this._latlngs[this._i]) / this.speed;
 
         this.startTransition(timems);
-
         this.setLatLng(this._latlngs[this._i]);
+
         if (this._i < (this._latlngslen - 1)) {
             this._tid = setTimeout(function () {
+                self._started = false;
                 self.start();
             }, timems);
         } else {
@@ -155,6 +168,7 @@ L.GlAnimatedMarkerPlugin = L.Marker.extend({
             } else {
                 this._tid = setTimeout(function () {
                     self._end = true;
+                    self._started = false;
                     self.stopTransition();
                     self.options.onEnd.apply(self, Array.prototype.slice.call(arguments));
                 }, timems);
